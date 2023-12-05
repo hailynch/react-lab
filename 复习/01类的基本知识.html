@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+  </body>
+  <script type="text/javascript">
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      // speak方法放在原型对象上，供实例使用
+      //通过Person实例调用speak时，speak的this是person实例
+      speak() {
+        console.log(`我叫${this.name}，我年龄是${this.age}`);
+      }
+    }
+
+    class student extends Person {
+      constructor(name, age, grade) {
+        super(name, age);
+        this.grade = grade;
+      }
+    }
+    // const p1 = new Person("tom", 18);
+    // const p2 = new Person("jerry", 19);
+    // console.log(p1);
+    // console.log(p2);
+    // p1.speak();
+    // p2.speak();
+
+    const s1 = new student("xiaoZhang", 15);
+    console.log(s1);
+    // p1.speak;
+  </script>
+</html>
