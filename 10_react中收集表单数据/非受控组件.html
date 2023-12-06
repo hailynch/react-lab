@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>受控组件</title>
+    <meta name="description" content="" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style type="text/css" media="screen">
+      .title {
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+
+    <!-- Place favicon.ico in the root directory -->
+  </head>
+  <body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script
+      type="text/javascript"
+      src="../React-js/react.development.js"
+    ></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script
+      type="text/javascript"
+      src="../React-js/react-dom.development.js"
+    ></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+      class Login extends React.Component {
+        //初始化状态
+        state = {
+          username: "",
+          password: "",
+        };
+        //保存用户名到状态了
+        savePassword = (event) => {
+          this.setState({ password: event.target.value });
+        };
+        saveName = (event) => {
+          this.setState({ username: event.target.value });
+        };
+        handleSubmit = (event) => {
+          event.preventDefault(); //阻止组件提交
+          const { username, password } = this.state;
+          alert(`用户名是${this.username}, 密码是${this.password}`);
+        };
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              用户名：{" "}
+              <input type="text" onChange={this.saveName} name="username" />
+              密码：{" "}
+              <input
+                type="password"
+                onChange={this.savePassword}
+                name="password"
+              />
+              <button>登录</button>
+            </form>
+          );
+        }
+      }
+      ReactDOM.render(<Login />, document.getElementById("test"));
+    </script>
+  </body>
+</html>
