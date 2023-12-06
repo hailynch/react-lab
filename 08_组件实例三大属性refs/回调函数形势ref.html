@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>state的简写方式</title>
+    <meta name="description" content="" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style type="text/css" media="screen">
+      .title {
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+
+    <!-- Place favicon.ico in the root directory -->
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <!-- 引入react核心库 -->
+    <script
+      type="text/javascript"
+      src="../React-js/react.development.js"
+    ></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script
+      type="text/javascript"
+      src="../React-js/react-dom.development.js"
+    ></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+    <script type="text/javascript" src="../React-js/prop-types.js"></script>
+
+    <script type="text/babel">
+      //创建组件
+      class Demo extends React.Component {
+        //展示左侧输入框
+        showData = () => {
+          alert(this.leftInput.value);
+        };
+        showData2 = () => {
+          alert(this.rightInput.value);
+        };
+        render() {
+          return (
+            <div>
+              <input
+                type="text"
+                ref={(c) => {
+                  this.leftInput = c;
+                }}
+                placeholder="点击我提示数据"
+              />
+              &nbsp;&nbsp;
+              <button onClick={this.showData}>点击我提示左侧数据</button> &nbsp;
+              <input
+                ref={(c) => {
+                  this.rightInput = c;
+                }}
+                onBlur={this.showData2}
+                type="text"
+                placeholder="失去焦点提示数据"
+              />
+            </div>
+          );
+        }
+      }
+      //渲染组件到页面
+      ReactDOM.render(<Demo />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>
