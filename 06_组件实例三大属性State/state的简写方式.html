@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>类式组件</title>
+    <title>state的简写方式</title>
     <meta name="description" content="" />
 
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -32,23 +32,16 @@
 
     <!-- 此处一定要写babel -->
     <script type="text/babel">
-      //1. 创建类式组件
       class Weather extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = { isHot: true };
-          this.changeWeather = this.changeWeather.bind(this);
-        }
-        changeWeather() {
+        //初始化状态
+        state = { isHot: false };
+        //自定义方法，采用赋值语句和箭头函数
+        changeWeather = () => {
           const isHot = this.state.isHot;
-          //状态不能直接更改，需要借助一个内置的API去更改
-          // this.state.isHot = !isHot;
           this.setState({ isHot: !isHot });
-
-          console.log(this.state.isHot);
-        }
+          console.log(this);
+        };
         render() {
-          //render的this是MyComponent的实例对象，也即MyComponent组件实例对象
           return (
             <h1 id="title" className="title" onClick={this.changeWeather}>
               今天天气很{this.state.isHot ? "炎热" : "凉爽"}
@@ -58,23 +51,6 @@
       }
       //2. 渲染组件到页面
       ReactDOM.render(<Weather />, document.getElementById("test"));
-
-      /* const title = document.getElementById("title");
-         title.addEventListener("click", () => {
-           console.log("title clicked");
-         });*/
-      /*
-       const title = document.getElementById("title");
-       title.onclick = () => {
-         console.log("title clicked");
-       };
-       */
-      function demo() {
-        console.log("标题被点击了");
-      }
-
-      /*
-       */
     </script>
   </body>
 </html>
