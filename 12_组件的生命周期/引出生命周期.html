@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>生命周期回调函数（钩子函数）</title>
+    <meta name="description" content="" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style type="text/css" media="screen">
+      .title {
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+
+    <!-- Place favicon.ico in the root directory -->
+  </head>
+  <body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script
+      type="text/javascript"
+      src="../React-js/react.development.js"
+    ></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script
+      type="text/javascript"
+      src="../React-js/react-dom.development.js"
+    ></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+      class Life extends React.Component {
+        state = { opacity: 1 };
+        dead = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        //组件挂载完毕后调用
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            let { opacity } = this.state;
+            opacity -= 0.1;
+            if (opacity <= 0) opacity = 1;
+            this.setState({ opacity });
+          }, 200);
+        }
+
+        //组件将要卸载
+        componentWillUnmount() {
+          clearInterval(this.timer);
+        }
+
+        //初次渲染，状态改变
+        render() {
+          console.log("render");
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>
+                React 学不会怎么办
+              </h2>
+              <button onClick={this.dead}>不活了</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Life />, document.getElementById("test"));
+    </script>
+  </body>
+</html>
