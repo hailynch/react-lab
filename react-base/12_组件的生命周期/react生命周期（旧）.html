@@ -1,0 +1,136 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>react生命周期（旧）</title>
+    <meta name="description" content="" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style type="text/css" media="screen">
+      .title {
+        background-color: orange;
+        width: 200px;
+      }
+    </style>
+
+    <!-- Place favicon.ico in the root directory -->
+  </head>
+  <body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script
+      type="text/javascript"
+      src="../React-js/react.development.js"
+    ></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script
+      type="text/javascript"
+      src="../React-js/react-dom.development.js"
+    ></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../React-js/babel.min.js"></script>
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---construct");
+          super(props);
+
+          this.state = { count: 0 };
+        }
+        add = () => {
+          let { count } = this.state;
+          count += 1;
+          this.setState({ count });
+        };
+        dead = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        forceUp = () => {
+          this.forceUpdate();
+        };
+        //组件将要加载
+        componentWillMount() {
+          console.log("Count---componentWillMount");
+        }
+        //组件挂载
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        //组件将要卸载的钩子
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+        //组件更新的阀门，如果返回为真，则更新
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        //组件将要更新的钩子
+        componentWillUpdate() {
+          console.log("Count---componentWillUpdae");
+        }
+        //组件更新完成的钩子
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          const { count } = this.state;
+          return (
+            <div>
+              <h2>当前的求和为:{count}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.dead}>卸载组件</button>
+              <button onClick={this.forceUp}>不更新状态，强制更新</button>
+            </div>
+          );
+        }
+      }
+      class A extends React.Component {
+        state = { carName: "奔驰" };
+        changeCar = () => {
+          this.setState({ carName: "奥拓" });
+        };
+        shouldComponentUpdate() {
+          console.log("B---shouldComponentUpdate");
+          return true;
+        }
+        //组件将要更新的钩子
+        componentWillUpdate() {
+          console.log("B---componentWillUpdae");
+        }
+        //组件更新完成的钩子
+        componentDidUpdate() {
+          console.log("B---componentDidUpdate");
+        }
+        render() {
+          console.log("B---render");
+          return (
+            <div>
+              <h2>我是A组件</h2>
+              <button onClick={this.changeCar}>换车</button>
+              <B carName={this.state.carName} />
+            </div>
+          );
+        }
+      }
+      class B extends React.Component {
+        //组件将要接受新的参数时的钩子
+        componentWillReceiveProps() {
+          console.log("B---componentWillReceiveProps");
+        }
+
+        render() {
+          return (
+            <div>
+              <h2>我是B组件,传递的参数为{this.props.carName}</h2>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<A />, document.getElementById("test"));
+    </script>
+  </body>
+</html>
